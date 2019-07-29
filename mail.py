@@ -67,6 +67,18 @@ def load_config(conf_file):
     return out
 
 
+def mail_sender_factory(conf_file):
+    conf = load_config(conf_file)
+    if conf:
+        try:
+            out = MailSender(**conf)
+        except:
+            raise ValueError('Configuration Error')
+    else:
+        raise TypeError('Error in Configuration File')
+    return out
+
+
 def load_file(file_name):
     if file_name:
         with open(file_name) as f_in:
@@ -122,8 +134,7 @@ def main():
     parser = setup_argparser()
     args = parser.parse_args()
     if args:
-        conf = load_config(args.config)
-        mail = MailSender(**conf)
+        mail = mail_sender_factory(args.config)
         if args.attachment:
             mail.make_attachment(args.attachment, args.subject)
         else:
