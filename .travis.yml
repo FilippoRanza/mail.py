@@ -10,4 +10,6 @@ python:
 install:
   - sudo python3 setup.py install
 
-script: bash check_install.sh
+script: 
+  - bash check_install.sh
+  - pytest test_mail.py

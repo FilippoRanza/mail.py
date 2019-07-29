@@ -101,11 +101,18 @@ def load_destination(dest):
 
 def setup_argparser():
     out = ArgumentParser()
-    out.add_argument('-d', '--destination', required=True, nargs='+')
-    out.add_argument('-s', '--subject', default=DEFAULT_SUBJECT)
-    out.add_argument('-c', '--config', default=DEFAULT_CONFIG_FILE)
-    out.add_argument('-a', '--attachment', default=None)
-    out.add_argument('-f', '--file')
+    out.add_argument('-d', '--destination', required=True, nargs='+',
+                     help='''Set destination addresse[es], this argument
+                     can be a file in this case adress[es] are read from it,
+                     addresses are line or spece separated''')
+    out.add_argument('-s', '--subject', default=DEFAULT_SUBJECT,
+                     help='specify subject')
+    out.add_argument('-c', '--config', default=DEFAULT_CONFIG_FILE,
+                     help='specify configuration file')
+    out.add_argument('-a', '--attachment', default=None,
+                     help='add attachment file, just one')
+    out.add_argument('-f', '--file',
+                     help="specify message file")
 
     return out
 
