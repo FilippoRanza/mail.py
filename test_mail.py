@@ -11,7 +11,7 @@ from mail import load_destination
 class TestLoadDestination(unittest.TestCase):
     """
     test load_destination
-    """    
+    """
 
     def test_load_destination(self):
         """
