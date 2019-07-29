@@ -1,3 +1,12 @@
 #! /bin/bash
+set -e
 
-which mail.py
+FILE=$(which mail.py) 
+BASE_DIR=$(dirname "$FILE")
+
+for d in $(echo "$PATH" | sed 's|:| |g'); do
+    [[ "$d" ==  "$BASE_DIR" ]] && exit 0
+done
+
+exit 1
+
