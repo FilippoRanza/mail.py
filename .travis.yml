@@ -8,6 +8,6 @@ python:
   - "3.7"
 
 install:
-  - sudo python3 setup.py
+  - sudo python3 setup.py install
 
 script: bash check_install.sh
