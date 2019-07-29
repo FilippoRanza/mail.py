@@ -5,8 +5,10 @@ FILE=$(which mail.py)
 BASE_DIR=$(dirname "$FILE")
 
 echo "$FILE"
-for d in $(echo "$PATH" | sed 's|:| |g'); do
-    [[ "$d" ==  "$BASE_DIR" ]] && exit 0
+for d in "${PATH//:/ }"; do
+    if [[ "$d" ==  "$BASE_DIR" ]]; 
+        mail.py -h && exit 0
+    fi
 done
 
 exit 1
