@@ -9,7 +9,8 @@ import unittest
 import json
 import tempfile
 
-from mail import load_destination, mail_sender_factory, MailSender
+from mail.load_destination import load_destination
+from mail.mail_sender import mail_sender_factory, MailSender
 
 
 class TestLoadDestination(unittest.TestCase):
@@ -21,6 +22,7 @@ class TestLoadDestination(unittest.TestCase):
         """
         test load_destination
         """
+
         # this list is like the one coming from arg parser
         arg = ['address@email.com', 'addresses_example.txt', 'mail@mail.com']
         correct = ['address@email.com',

@@ -12,4 +12,4 @@ install:
 
 script: 
   - bash check_install.sh
-  - pytest test_mail.py
+  - python -m pytest tests
