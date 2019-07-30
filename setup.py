@@ -9,5 +9,6 @@ setup(name='mail.py',
       author='Filippo Ranza',
       author_email='filipporanza@gmail.com',
       url='https://github.com/FilippoRanza/mail.py',
+      packages=['mail'],
       scripts=['mail.py']
      )
