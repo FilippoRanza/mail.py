@@ -11,6 +11,7 @@ from os import path
 
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
+from email.mime.text import MIMEText
 from email.message import EmailMessage
 
 from argparse import ArgumentParser
@@ -28,8 +29,11 @@ class MailSender:
         self.port = port
         self.mail = None
 
-    def __build_mail__(self, subj, mail):
-        mail = mail()
+    def __build_mail__(self, subj):
+        if self.mail:
+            return
+
+        mail = MIMEMultipart()
 
         mail['Subject'] = subj
         mail['from'] = self.user
@@ -37,11 +41,12 @@ class MailSender:
         self.mail = mail
 
     def make_mail(self, msg, subj):
-        self.__build_mail__(subj, EmailMessage)
-        self.mail.set_content(msg)
+        self.__build_mail__(subj)
+        text = MIMEText(msg, 'plain')
+        self.mail.attach(text)
 
     def make_attachment(self, file, subj):
-        self.__build_mail__(subj, MIMEMultipart)
+        self.__build_mail__(subj)
 
         with open(file, "rb") as f_in:
             attach = MIMEApplication(f_in.read(),
@@ -111,6 +116,22 @@ def load_destination(dest):
     return out
 
 
+def message_builder(args):
+    mail = mail_sender_factory(args.config)
+    attach = False
+    if args.attachment:
+        mail.make_attachment(args.attachment, args.subject)
+        attach = True
+  
+    if args.file or (not attach):
+        msg = load_file(args.file)
+        mail.make_mail(msg, args.subject)
+
+    return mail
+
+
+
+
 def setup_argparser():
     out = ArgumentParser()
     out.add_argument('-d', '--destination', required=True, nargs='+',
@@ -130,17 +151,10 @@ def setup_argparser():
 
 
 def main():
-
     parser = setup_argparser()
     args = parser.parse_args()
     if args:
-        mail = mail_sender_factory(args.config)
-        if args.attachment:
-            mail.make_attachment(args.attachment, args.subject)
-        else:
-            msg = load_file(args.file)
-            mail.make_mail(msg, args.subject)
-
+        mail = message_builder(args)
         dst = load_destination(args.destination)
         mail.send_mail(dst)
 

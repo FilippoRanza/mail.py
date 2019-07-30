@@ -3,3 +3,4 @@
 .vscode/
 # adding untracked files on 2019-07-30 00:41
 __pycache__/
+mail_config.json
