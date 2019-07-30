@@ -9,8 +9,8 @@ import unittest
 import json
 import tempfile
 
-from mail.load_destination import load_destination
-from mail.mail_sender import mail_sender_factory, MailSender
+from mail_sender.load_destination import load_destination
+from mail_sender.mail_sender import mail_sender_factory, MailSender
 
 
 class TestLoadDestination(unittest.TestCase):

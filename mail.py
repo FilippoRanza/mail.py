@@ -4,7 +4,7 @@
 
 
 from argparse import ArgumentParser
-from mail import message_builder, load_destination
+from mail_sender import message_builder, load_destination
 
 DEFAULT_SUBJECT = "A message from mail.py"
 DEFAULT_CONFIG_FILE = "/etc/mail_config.json"
