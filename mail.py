@@ -12,7 +12,6 @@ from os import path
 from email.mime.multipart import MIMEMultipart
 from email.mime.application import MIMEApplication
 from email.mime.text import MIMEText
-from email.message import EmailMessage
 
 from argparse import ArgumentParser
 
@@ -122,7 +121,7 @@ def message_builder(args):
     if args.attachment:
         mail.make_attachment(args.attachment, args.subject)
         attach = True
-  
+
     if args.file or (not attach):
         msg = load_file(args.file)
         mail.make_mail(msg, args.subject)
