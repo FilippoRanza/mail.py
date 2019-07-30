@@ -10,8 +10,6 @@ DEFAULT_SUBJECT = "A message from mail.py"
 DEFAULT_CONFIG_FILE = "/etc/mail_config.json"
 
 
-
-
 def setup_argparser():
     out = ArgumentParser()
     out.add_argument('-d', '--destination', required=True, nargs='+',
