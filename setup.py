@@ -19,7 +19,7 @@ def find_packages():
 
 
 setup(name='mail.py',
-      version='0.1',
+      version='0.2.1',
       description='simple cli email sender',
       author='Filippo Ranza',
       author_email='filipporanza@gmail.com',
