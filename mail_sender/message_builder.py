@@ -26,14 +26,15 @@ def load_bin_file(file_name):
 
 def message_builder(conf, attachment, subj, file):
     mail = mail_sender_factory(conf)
+    mail.set_subject(subj)
     attach = False
     if attachment:
         data = load_bin_file(attachment)
-        mail.make_attachment(data, basename(attachment), subj)
+        mail.make_attachment(data, basename(attachment))
         attach = True
 
     if file or (not attach):
         msg = load_text_file(file)
-        mail.make_mail(msg, subj)
+        mail.make_mail(msg)
 
     return mail

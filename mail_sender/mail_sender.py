@@ -25,25 +25,28 @@ class MailSender:
         self.port = port
         self.mail = None
 
-    def __build_mail__(self, subj):
+    def __build_mail__(self):
         if self.mail:
             return
 
         mail = MIMEMultipart()
-        mail['Subject'] = subj
         mail['from'] = self.user
         self.mail = mail
 
-    def make_mail(self, msg, subj):
-        self.__build_mail__(subj)
+    def make_mail(self, msg):
+        self.__build_mail__()
         text = MIMEText(msg, 'plain')
         self.mail.attach(text)
 
-    def make_attachment(self, data, name, subj):
-        self.__build_mail__(subj)
+    def make_attachment(self, data, name):
+        self.__build_mail__()
         attach = MIMEApplication(data, Name=name)
         attach['Content-Disposition'] = 'attachment; filename="%s"' % name
         self.mail.attach(attach)
+
+    def set_subject(self, subj):
+        self.__build_mail__()
+        self.mail['Subject'] = subj
 
     def send_mail(self, dest):
         server = smtplib.SMTP(self.server, port=self.port)
