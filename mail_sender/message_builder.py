@@ -24,16 +24,16 @@ def load_bin_file(file_name):
     return out
 
 
-def message_builder(args):
-    mail = mail_sender_factory(args.config)
+def message_builder(conf, attachment, subj, file):
+    mail = mail_sender_factory(conf)
     attach = False
-    if args.attachment:
-        data = load_bin_file(args.attachment)
-        mail.make_attachment(data, basename(args.attachment), args.subject)
+    if attachment:
+        data = load_bin_file(attachment)
+        mail.make_attachment(data, basename(attachment), subj)
         attach = True
 
-    if args.file or (not attach):
-        msg = load_text_file(args.file)
-        mail.make_mail(msg, args.subject)
+    if file or (not attach):
+        msg = load_text_file(file)
+        mail.make_mail(msg, subj)
 
     return mail

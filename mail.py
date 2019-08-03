@@ -22,7 +22,7 @@ def setup_argparser():
                      help='specify configuration file')
     out.add_argument('-a', '--attachment', default=None,
                      help='add attachment file, just one')
-    out.add_argument('-f', '--file',
+    out.add_argument('-f', '--file', default=None,
                      help="specify message file")
 
     return out
@@ -32,7 +32,7 @@ def main():
     parser = setup_argparser()
     args = parser.parse_args()
     if args:
-        mail = message_builder(args)
+        mail = message_builder(args.config, args.attachment, args.subject, args.file)
         dst = load_destination(args.destination)
         mail.send_mail(dst)
 
