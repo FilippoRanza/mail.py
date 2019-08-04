@@ -29,9 +29,11 @@ def message_builder(conf, attachment, subj, file):
     mail.set_subject(subj)
     attach = False
     if attachment:
-        data = load_bin_file(attachment)
-        mail.make_attachment(data, basename(attachment))
         attach = True
+        for at in attachment:
+            data = load_bin_file(at)
+            mail.make_attachment(data, basename(at))
+        
 
     if file or (not attach):
         msg = load_text_file(file)

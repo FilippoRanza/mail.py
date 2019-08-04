@@ -42,9 +42,10 @@ class TestMessageBuilder(unittest.TestCase):
         """
         with NamedTemporaryFile() as file:
             subj = rand_string()
-            mail = message_builder('tests/test_conf.json', file.name, subj, None)
+            mail = message_builder('tests/test_conf.json', [file.name], subj, None)
             self.assertEqual(mail.mail['Subject'], subj)
             self.assertIsInstance(mail.mail.get_payload(0), MIMEApplication)
+            self.assertEqual(len(mail.mail.get_payload()), 1)
 
 
     def test_with_file(self):
@@ -54,9 +55,10 @@ class TestMessageBuilder(unittest.TestCase):
         """
         with NamedTemporaryFile() as file:
             subj = rand_string()
-            mail = message_builder('tests/test_conf.json', None, subj, file.name)
+            mail = message_builder('tests/test_conf.json', [], subj, file.name)
             self.assertEqual(mail.mail['Subject'], subj)
             self.assertIsInstance(mail.mail.get_payload(0), MIMEText)
+            self.assertEqual(len(mail.mail.get_payload()), 1)
 
 
     def test_with_file_and_attachment(self):
@@ -66,12 +68,13 @@ class TestMessageBuilder(unittest.TestCase):
         """
         with NamedTemporaryFile() as file:
             subj = rand_string()
-            mail = message_builder('tests/test_conf.json', file.name, subj, file.name)
+            mail = message_builder('tests/test_conf.json', [file.name], subj, file.name)
             self.assertEqual(mail.mail['Subject'], subj)
 
             # attachment, when available are always the first thing added
             self.assertIsInstance(mail.mail.get_payload(0), MIMEApplication)
             self.assertIsInstance(mail.mail.get_payload(1), MIMEText)
+            self.assertEqual(len(mail.mail.get_payload()), 2)
 
 if __name__ == "__main__":
     unittest.main()

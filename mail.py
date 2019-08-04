@@ -20,7 +20,7 @@ def setup_argparser():
                      help='specify subject')
     out.add_argument('-c', '--config', default=DEFAULT_CONFIG_FILE,
                      help='specify configuration file')
-    out.add_argument('-a', '--attachment', default=None,
+    out.add_argument('-a', '--attachment', default=None, nargs='+',
                      help='add attachment file, just one')
     out.add_argument('-f', '--file', default=None,
                      help="specify message file")
