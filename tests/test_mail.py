@@ -49,18 +49,16 @@ class TestMailSenderFactory(unittest.TestCase):
         this code should generate a correct
         MailSender
         """
-        correct_conf = {
-            'user': 'test@email.com',
-            'passwd': 'super_passwd',
-            'server': 'smtp.email.com',
-            'port': 456
-        }
+ 
+        mail = mail_sender_factory('tests/test_conf.json')
+        self.assertIsInstance(mail, MailSender)
+        
+        # values from test_conf.json
+        self.assertEqual('example@email.com', mail.user)
+        self.assertEqual('example_password', mail.passwd)
+        self.assertEqual('smtp.email.com', mail.server)
+        self.assertEqual(123, mail.port)
 
-        with tempfile.NamedTemporaryFile(mode="r+") as file:
-            json.dump(correct_conf, file)
-            file.seek(0)
-            mail = mail_sender_factory(file.name)
-            self.assertIsInstance(mail, MailSender)
 
 
 
@@ -70,20 +68,12 @@ class TestMailSenderFactory(unittest.TestCase):
         test when the configuration file
         exists and it actually contains some
         correct json, but it is not a correct
-        configuration
+        configuration because of a
+        misspelled key word
         """
-        wrong_conf = {
-            'account': 'test@email.com',
-            'password': 'super_passwd',
-            'server': 'smtp.email.com',
-            'port': 456
-        }
 
-        with tempfile.NamedTemporaryFile(mode="r+") as file:
-            json.dump(wrong_conf, file)
-            file.seek(0)
-            with self.assertRaises(ValueError):
-                mail_sender_factory(file.name)
+        with self.assertRaises(ValueError):
+            mail_sender_factory('tests/misspelled_conf.json')
 
 
 
@@ -95,12 +85,8 @@ class TestMailSenderFactory(unittest.TestCase):
         exists but it doesn't contain any
         correct json
         """
-
-        with tempfile.NamedTemporaryFile(mode="r+") as file:
-            file.write('{"test":"value"')
-            file.seek(0)
-            with self.assertRaises(TypeError):
-                mail_sender_factory(file.name)
+        with self.assertRaises(TypeError):
+             mail_sender_factory('tests/wrong_conf.json')
 
 
 
