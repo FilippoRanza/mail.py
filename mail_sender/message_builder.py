@@ -33,7 +33,7 @@ def message_builder(conf, attachment, subj, file):
         for at in attachment:
             data = load_bin_file(at)
             mail.make_attachment(data, basename(at))
-        
+
 
     if file or (not attach):
         msg = load_text_file(file)
