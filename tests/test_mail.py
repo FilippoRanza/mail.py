@@ -78,7 +78,7 @@ class TestMailSenderFactory(unittest.TestCase):
         correct json
         """
         with self.assertRaises(TypeError):
-            mail_sender_factory('tests/wrong_conf.json')
+            mail_sender_factory('tests/wrong_conf.josn')
 
 
 
