@@ -1,0 +1,6 @@
+{
+    "account": "test@email.com",
+    "password": "super_passwd",
+    "server": "smtp.email.com",
+    "port": 456
+}
